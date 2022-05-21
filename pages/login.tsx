@@ -2,11 +2,20 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 interface Inputs {
   email: string
   password: string
 }
+
+const schema = yup
+  .object({
+    email: yup.string().required('Required').email(),
+    password: yup.string().required('Required').min(8).max(16),
+  })
+  .required()
 
 function Login() {
   const [login, setLogin] = useState(false)
@@ -16,7 +25,7 @@ function Login() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<Inputs>({ resolver: yupResolver(schema) })
 
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
 
@@ -50,24 +59,23 @@ function Login() {
               type="email"
               placeholder="Email"
               className="input"
-              {...register('email', { required: true })}
+              {...register('email')}
             />
-            {errors.email && (
-              <p className="p-1 text-[13px] font-light text-orange-500">
-                Please enter a valid email.
-              </p>
-            )}
+
+            <p className="p-1 text-[13px] font-light text-orange-500">
+              {errors.email?.message}
+            </p>
           </label>
           <label className="inline-block w-full">
             <input
               type="password"
               placeholder="Password"
               className="input"
-              {...register('password', { required: true })}
+              {...register('password')}
             />
             {errors.password && (
               <p className="p-1 text-[13px] font-light text-orange-500">
-                Your password must contain between 8 and 16 characters.
+                {errors.password?.message}
               </p>
             )}
           </label>
