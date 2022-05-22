@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import useAuth from '../hooks/useAuth'
 
 interface Inputs {
   email: string
@@ -19,6 +20,7 @@ const schema = yup
 
 function Login() {
   const [login, setLogin] = useState(false)
+  const { signIn, signUp } = useAuth()
 
   const {
     register,
@@ -27,8 +29,13 @@ function Login() {
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) })
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
-
+  const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
+    if (login) {
+      await signIn(email, password)
+    } else {
+      await signUp(email, password)
+    }
+  }
   return (
     <div className="relative flex h-screen w-screen flex-col bg-transparent md:items-center md:justify-center">
       <Head>
