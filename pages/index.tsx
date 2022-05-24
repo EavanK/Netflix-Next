@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Banner from '../components/Banner'
 import Header from '../components/Header'
 import Row from '../components/Row'
+import useAuth from '../hooks/useAuth'
 import { Movie } from '../typings'
 import { getMovies } from '../utils/requests'
 
@@ -26,6 +27,10 @@ const Home = ({
   topRated,
   trendingNow,
 }: Props) => {
+  const { loading } = useAuth()
+
+  if (loading) return <h2>Loading...</h2>
+
   return (
     <div className="relative h-screen bg-gradient-to-b lg:h-[140vh]">
       <Head>
