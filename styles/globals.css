@@ -9,6 +9,9 @@
   header {
     @apply fixed top-0 z-50 flex w-full items-center justify-between p-4 transition-all lg:px-10 lg:py-6;
   }
+  li {
+    @apply flex items-center gap-x-2 text-lg;
+  }
 }
 
 @layer components {
@@ -32,16 +35,17 @@
   .modalButton {
     @apply flex h-11 w-11 items-center justify-center rounded-full border-2 border-[gray] bg-[#2a2a2a]/60 transition hover:border-white hover:bg-white/10;
   }
+
+  .planBox {
+    @apply relative mx-1.5 flex h-20 w-[calc(100%/3)] cursor-default items-center justify-center rounded-sm bg-[#e50915] font-semibold shadow after:absolute after:top-full after:left-1/2 after:block after:-translate-x-1/2 after:border-8 after:border-b-0 after:border-transparent after:border-t-[#e50914] after:content-[""] md:h-32 lg:mx-8;
+  }
 }
 
 @layer utilities {
-  @variants responsive {
-    .text-shadow-md {
-      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
-    }
-    .text-shadow-lg {
-      text-shadow: 0 15px 30px rgba(0, 0, 0, 0.11),
-        0 5px 15px rgba(0, 0, 0, 0.08);
-    }
+  .text-shadow-md {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+  .text-shadow-lg {
+    text-shadow: 0 15px 30px rgba(0, 0, 0, 0.11), 0 5px 15px rgba(0, 0, 0, 0.08);
   }
 }
